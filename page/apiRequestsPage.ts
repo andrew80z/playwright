@@ -1,7 +1,5 @@
 import { expect } from "@playwright/test";
 
-
-
 export class apiRequestsPage{
      async getBreweryById(myUrl: RequestInfo | URL, ){
        let method = 'GET';
@@ -18,9 +16,6 @@ export class apiRequestsPage{
           return formJSON;
         }
     }
-          
-        //console.log('result is: ', JSON.stringify(result, null, 4));
-
     
    
       
