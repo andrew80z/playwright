@@ -12,7 +12,7 @@ test.describe('Heroku-app page testing', () => {
   let screenshotName = './screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
      
   test.afterEach( async () =>{
-    await (await browser).close();
+   // await (await browser).close();
   }); 
     
     test('A\B testing should contain content', async ({ page }) => {

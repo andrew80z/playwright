@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 
 export class apiRequestsPage{
+    
      async getBreweryById(myUrl: RequestInfo | URL, ){
        let method = 'GET';
        
