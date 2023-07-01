@@ -17,7 +17,8 @@ const testData = {
     state: 'Ohio',
     street: '5164 Kennedy Ave'
 }
-const myUrl = 'https://api.openbrewerydb.org'+'/v1/breweries/'+ testData.id;
+const endpoint = '/v1/breweries/'
+const myUrl = 'https://api.openbrewerydb.org'+ endpoint + testData.id;
   
 test('should be get brewvery by ID and compare response', async ({ request }) => {
      
