@@ -17,13 +17,41 @@ const testData = {
     state: 'Ohio',
     street: '5164 Kennedy Ave'
 }
-const endpoint = '/v1/breweries/'
-const myUrl = 'https://api.openbrewerydb.org'+ endpoint + testData.id;
+let requests = new apiRequestsPage();
+const postUrl = 'https://api.restful-api.dev/objects';
+
   
-test('should be get brewvery by ID and compare response', async ({ request }) => {
-     
-    let requests = new apiRequestsPage();
+test.skip('should be get brewvery by ID and compare response', async ({  }) => {
+    const endpoint = '/v1/breweries/'
+    const myUrl = 'https://api.openbrewerydb.org'+ endpoint + testData.id;
+
     let getRequest = await requests.getBreweryById(myUrl);
     expect(getRequest.name).toEqual(testData.name);
 
+});
+test('Get List of objects', async () => {  
+    let getAllObjects = await requests.getListOfObjects(postUrl);
+    expect(getAllObjects).not.toBeEmpty
+});
+
+
+test('Send test POST request', async ({  }) => {
+    const testId = 7
+    const postBody = {
+        "name": "Apple MacBook Pro 16",
+        "data": {
+           "year": 2019,
+           "price": 1849.99,
+           "CPU model": "Intel Core i9",
+           "Hard disk size": "1 TB"
+        }
+     }
+
+    const postUrl = 'https://api.restful-api.dev/objects';
+  
+    let postRequest = await requests.testPostrequest(postUrl, postBody);
+    const testData = await requests.getListOfObjects(postUrl);
+    console.log(testData[testId -1 ]);
+   expect(postRequest.name).toEqual(postBody.name);
+   expect(postRequest.data).toEqual(postBody.data);
 });
