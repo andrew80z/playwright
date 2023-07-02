@@ -1,3 +1,6 @@
 # playwright
+
 Playwright tests sandbox
-TBD
+
+
+npx playwright test
