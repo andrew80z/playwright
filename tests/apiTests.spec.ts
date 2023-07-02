@@ -21,7 +21,7 @@ let requests = new apiRequestsPage();
 const postUrl = 'https://api.restful-api.dev/objects';
 
   
-test.skip('should be get brewvery by ID and compare response', async ({  }) => {
+test('should be get brewvery by ID and compare response', async ({  }) => {
     const endpoint = '/v1/breweries/'
     const myUrl = 'https://api.openbrewerydb.org'+ endpoint + testData.id;
 
@@ -51,7 +51,6 @@ test('Send test POST request', async ({  }) => {
   
     let postRequest = await requests.testPostrequest(postUrl, postBody);
     const testData = await requests.getListOfObjects(postUrl);
-    console.log(testData[testId -1 ]);
-   expect(postRequest.name).toEqual(postBody.name);
-   expect(postRequest.data).toEqual(postBody.data);
+    expect(postRequest.name).toEqual(postBody.name);
+    expect(postRequest.data).toEqual(postBody.data);
 });
