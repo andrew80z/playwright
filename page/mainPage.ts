@@ -22,10 +22,8 @@ export class PlaywrightMainPage{
         let webURL =  myEnv.qa.webURL;
         if (process.env.runEnv == 'qa'){
             webURL =  myEnv.qa.webURL;
-            console.log(`test ${webURL}`);
         } else if(process.env.runEnv == 'dev'){
             webURL =  myEnv.dev.webURL;
-            console.log(`test ${webURL}`);
         } else{
             console.log(` ${process.env.runEnv}is an Invalid input`);
         }

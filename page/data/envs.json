@@ -1,12 +1,12 @@
 {
     "qa" : {
     "endpoint" : "/v1/breweries/_QA",
-    "postUrl" : "https://api.restful-api.dev/objects_QA",
+    "postUrl" : "https://api.restful-api.dev/objects",
     "webURL" : "https://the-internet.herokuapp.com/"
     }, 
     "dev": {
     "endpoint" : "/v1/breweries/_DEV",
-    "postUrl" : "https://api.restful-api.dev/objects_DEV",
+    "postUrl" : "https://api.restful-api.dev/objects",
     "webURL" : "https://the-internet.herokuapp.com/"
     }
 

@@ -19,7 +19,7 @@ const testData = {
     state: 'Ohio',
     street: '5164 Kennedy Ave'
 }
-
+/*
 let myEnv = require( '../page/data/envs.json');
 let postUrl =  myEnv.qa.postUrl;
 let endpoint = '/v1/breweries/';
@@ -34,14 +34,18 @@ if (process.env.runEnv == 'qa'){
 } else{
     console.log(` ${process.env.runEnv}is an Invalid input`);
 }
+*/
 let requests = new apiRequestsPage();
 
 //const postUrl = 'https://api.restful-api.dev/objects';
 
-test.describe.skip('API tests', async () =>{
+test.describe('API tests', async () =>{
+    let envSetup = await requests.envSetup();
+    let endpoint = envSetup.endpoint;
+    let postUrl = envSetup.postUrl;
   
     test('should be get brewvery by ID and compare response', async ({  }) => {
-        const endpoint = myEnv.qa.endpoint; //'/v1/breweries/'
+        //const endpoint = myEnv.qa.endpoint; //'/v1/breweries/';
         const myUrl = 'https://api.openbrewerydb.org'+ endpoint + testData.id;
         let getRequest = await requests.getBreweryById(myUrl);
         expect(getRequest.name).toEqual(testData.name);
