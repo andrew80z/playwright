@@ -9,7 +9,7 @@ import { firefox } from '@playwright/test';
 test.describe('Heroku-app page testing', () => {
   const browser = firefox.launch();
   let nowDate = new Date();
-  let screenshotName = '.test-resuultd/screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
+  let screenshotName = '.test-results/screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
      
   test.afterEach( async () =>{
    // await (await browser).close();
