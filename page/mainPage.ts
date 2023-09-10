@@ -14,10 +14,10 @@ export class PlaywrightMainPage{
         this.addRemoveButton = page.locator('a', { hasText: 'Add/Remove Elements' });
         this.checkboxesButton = page.locator('a', { hasText: 'Checkboxes' });
         this.dropDownButton = page.locator('a', { hasText: 'Dropdown' });
-        this.basicAuthButton = page.locator('a', { hasText: 'Basic Auth'});
-
+        this.basicAuthButton = page.locator('a', { hasText: 'Basic Auth'}); 
+        
     }
     async goto(){
-        await this.page.goto('https://the-internet.herokuapp.com/');
+        await this.page.goto('/');
     }
 }
