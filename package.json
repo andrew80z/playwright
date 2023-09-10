@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test_dev": "echo 'Running On DEV env' && cross-env URL=https://the-internet.herokuapp.com/ npx playwright test",
-    "test_qa": "echo 'Running On QA env' && cross-env URL=https://the-internet.herokuapp.com/ npx playwright test"
+    "test-dev": "echo 'Running On DEV env' && cross-env runEnv=dev npx playwright test",
+    "test-dev-headed": "echo 'Running On DEV env' && cross-env runEnv=dev npx playwright test --headed",
+    "test-qa": "echo 'Running On QA env' && cross-env runEnv=qa npx playwright test",
+    "test-qa-headed": "echo 'Running On QA env' && cross-env runEnv=qa npx playwright test --headed"
   },
   "keywords": [],
   "author": "",

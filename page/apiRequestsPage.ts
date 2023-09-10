@@ -16,7 +16,7 @@ export class apiRequestsPage{
           const formJSON = await response.json()
          
           return formJSON;
-    }
+}
       
 async getListOfObjects(myUrl: RequestInfo | URL){
   let method = 'GET';
@@ -31,7 +31,8 @@ async getListOfObjects(myUrl: RequestInfo | URL){
          
           return formJSON;
 }
-    async testPostrequest(myUrl: RequestInfo | URL , postBody){
+
+async testPostrequest(myUrl: RequestInfo | URL , postBody){
           let method = 'POST';
         
            const response =  await fetch(myUrl, {
