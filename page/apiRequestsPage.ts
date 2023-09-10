@@ -1,8 +1,23 @@
 import { expect } from "@playwright/test";
-import { Response } from "node-fetch";
 
 export class apiRequestsPage{
-    
+    async envSetup(){
+      let myEnv = require( '../page/data/envs.json');
+let postUrl = "https://api.restful-api.dev/objects";
+let endpoint = '/v1/breweries/';
+if (process.env.runEnv == 'qa'){
+    postUrl =  myEnv.qa.postUrl;
+    const endpoint = myEnv.qa.endpoint;
+} else if(process.env.runEnv == 'dev'){
+    postUrl =  myEnv.dev.postUrl;
+    const endpoint = myEnv.dev.endpoint;
+}
+  return {
+    "postUrl" : postUrl,
+    "endpoint" : endpoint
+  };
+
+    }
      async getBreweryById(myUrl: RequestInfo | URL, ){
        let method = 'GET';
        
@@ -16,7 +31,7 @@ export class apiRequestsPage{
           const formJSON = await response.json()
          
           return formJSON;
-    }
+}
       
 async getListOfObjects(myUrl: RequestInfo | URL){
   let method = 'GET';
@@ -31,7 +46,8 @@ async getListOfObjects(myUrl: RequestInfo | URL){
          
           return formJSON;
 }
-    async testPostrequest(myUrl: RequestInfo | URL , postBody){
+
+async testPostrequest(myUrl: RequestInfo | URL , postBody){
           let method = 'POST';
         
            const response =  await fetch(myUrl, {

@@ -9,8 +9,13 @@ import { firefox } from '@playwright/test';
 test.describe('Heroku-app page testing', () => {
   const browser = firefox.launch();
   let nowDate = new Date();
-  let screenshotName = './screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
-     
+  let screenshotName = '.test-results/screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
+  
+  test.beforeEach(async ({ page }) =>{
+    const mainPage = new PlaywrightMainPage(page);
+    await mainPage.goto();
+  })
+  
   test.afterEach( async () =>{
    // await (await browser).close();
   }); 
@@ -20,7 +25,6 @@ test.describe('Heroku-app page testing', () => {
       //await (await browser).newPage();
       const playwrightAb = new PlaywrightAbPage(page);
       const mainPage = new PlaywrightMainPage(page);
-      await mainPage.goto();
       await mainPage.abTestingButton.click();
       await expect(playwrightAb.abHeaderLabel).toBeVisible();
       await page.screenshot({ path: screenshotName});
@@ -30,7 +34,6 @@ test.describe('Heroku-app page testing', () => {
     test('Add/Remove Elements buttons behavior', async ({ page }) => {
       const addRemoveEl = new PlaywrightAddRemoveElPage(page);
       const mainPage = new PlaywrightMainPage(page);
-      await mainPage.goto();
       await mainPage.addRemoveButton.click();
       await expect(addRemoveEl.addRemoveHeader).toBeVisible();
       await expect(addRemoveEl.delButton).not.toBeVisible();
@@ -45,7 +48,6 @@ test.describe('Heroku-app page testing', () => {
     test('Checkboxes behavior', async ({ page }) => {
       const checkboxesPage = new PlaywrightCheckboxPage(page);
       const mainPage = new PlaywrightMainPage(page);
-      await mainPage.goto();
       await mainPage.checkboxesButton.click();
       expect(checkboxesPage.checkbox1).not.toBeChecked;
       expect(checkboxesPage.checkbox2).toBeChecked;
@@ -58,7 +60,6 @@ test.describe('Heroku-app page testing', () => {
     test('Dropdown behavior', async ({ page }) => {
       const dropDownPage = new PlaywrightDropDownPage(page);
       const mainPage = new PlaywrightMainPage(page);
-      await mainPage.goto();
       await mainPage.dropDownButton.click();
       await expect(dropDownPage.defaultOption).toHaveAttribute('selected', 'selected');
       await dropDownPage.dropDownExpand.click();

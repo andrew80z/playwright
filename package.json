@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test-dev": "echo 'Running On DEV env' && cross-env runEnv=dev npx playwright test",
+    "test-dev-headed": "echo 'Running On DEV env' && cross-env runEnv=dev npx playwright test --headed",
+    "test-qa": "echo 'Running On QA env' && cross-env runEnv=qa npx playwright test",
+    "test-qa-headed": "echo 'Running On QA env' && cross-env runEnv=qa npx playwright test --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,5 +18,8 @@
     "@types/mocha": "^10.0.1",
     "@types/node-fetch": "^2.6.4",
     "node-fetch": "^2.6.12"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }
