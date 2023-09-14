@@ -76,7 +76,7 @@ test.describe('Heroku-app page testing', () => {
     test('File download', async ({page}) => {
       const mainPage = new PlaywrightMainPage(page);
       const downloadFilePage = new DownloadFilePage(page);
-      const filename = 'Internet_April_1694613502959.pdf';
+      const filename = 'Radha Subramanya.pdf';
       const savePath = './page/data/tmpDownload/'
       await mainPage.fileDownloadButton.click();
       const downloadPromise = page.waitForEvent('download');

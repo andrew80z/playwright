@@ -27,7 +27,8 @@ export class PlaywrightMainPage{
         } else if(process.env.runEnv == 'dev'){
             webURL =  myEnv.dev.webURL;
         } else{ 
-            console.log(` ${process.env.runEnv}is an Invalid input`);
+            console.log(` ${process.env.runEnv}is an Invalid input. Using default value`);
+            webURL =  myEnv.qa.webURL;
         }
         await this.page.goto(webURL);
     }
