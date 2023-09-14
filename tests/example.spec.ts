@@ -73,7 +73,7 @@ test.describe('Heroku-app page testing', () => {
       await expect(dropDownPage.ddOption2).toHaveAttribute('selected', 'selected');
     });
 
-    test.only('File download', async ({page}) => {
+    test('File download', async ({page}) => {
       const mainPage = new PlaywrightMainPage(page);
       const downloadFilePage = new DownloadFilePage(page);
       
