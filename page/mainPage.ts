@@ -7,6 +7,7 @@ export class PlaywrightMainPage{
     readonly checkboxesButton: Locator;
     readonly dropDownButton: Locator;
     readonly basicAuthButton: Locator;
+    readonly fileDownloadButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -15,6 +16,7 @@ export class PlaywrightMainPage{
         this.checkboxesButton = page.locator('a', { hasText: 'Checkboxes' });
         this.dropDownButton = page.locator('a', { hasText: 'Dropdown' });
         this.basicAuthButton = page.locator('a', { hasText: 'Basic Auth'}); 
+        this.fileDownloadButton = page.getByText('File Download', { exact: true });
         
     }
     async goto(){
@@ -24,7 +26,7 @@ export class PlaywrightMainPage{
             webURL =  myEnv.qa.webURL;
         } else if(process.env.runEnv == 'dev'){
             webURL =  myEnv.dev.webURL;
-        } else{
+        } else{ 
             console.log(` ${process.env.runEnv}is an Invalid input`);
         }
         await this.page.goto(webURL);

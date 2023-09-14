@@ -5,6 +5,9 @@ import { PlaywrightAddRemoveElPage } from '../page/addRemove-elements-page';
 import { PlaywrightCheckboxPage } from '../page/checkboxesPage';
 import { PlaywrightDropDownPage } from '../page/dropDownPage';
 import { firefox } from '@playwright/test';
+import { DownloadFilePage} from '../page/downloadFile.Page';
+import fs from "fs";
+
 
 test.describe('Heroku-app page testing', () => {
   const browser = firefox.launch();
@@ -13,6 +16,7 @@ test.describe('Heroku-app page testing', () => {
   
   test.beforeEach(async ({ page }) =>{
     const mainPage = new PlaywrightMainPage(page);
+    const playwrightAb = new PlaywrightAbPage(page);
     await mainPage.goto();
   })
   
@@ -23,8 +27,8 @@ test.describe('Heroku-app page testing', () => {
     test('A\B testing should contain content', async ({ page }) => {
       let headTextAb = 'Also known as split testing. This is a way in which businesses are able to simultaneously test and learn different versions of a page to see which text and/or functionality works best towards a desired outcome (e.g. a user action such as a click-through).';
       //await (await browser).newPage();
-      const playwrightAb = new PlaywrightAbPage(page);
       const mainPage = new PlaywrightMainPage(page);
+      const playwrightAb = new PlaywrightAbPage(page);
       await mainPage.abTestingButton.click();
       await expect(playwrightAb.abHeaderLabel).toBeVisible();
       await page.screenshot({ path: screenshotName});
@@ -69,10 +73,29 @@ test.describe('Heroku-app page testing', () => {
       await expect(dropDownPage.ddOption2).toHaveAttribute('selected', 'selected');
     });
 
+    test.only('File download', async ({page}) => {
+      const mainPage = new PlaywrightMainPage(page);
+      const downloadFilePage = new DownloadFilePage(page);
+      
+      const filename = 'Internet_April_1694613502959.pdf';
+      const savePath = './page/data/tmpDownload/'
+      await mainPage.fileDownloadButton.click();
+      const downloadPromise = page.waitForEvent('download');
+      await downloadFilePage.pdfDownloadButton.click();
+      const download = await downloadPromise;
+      const finFilePath = savePath+filename
+      // Wait for the download process to complete
+      console.log(await download.path());
+      // Save downloaded file somewhere
+      await download.saveAs(finFilePath);
+      let pdf = require('pdf-parse');
+      let dataBuffer = fs.readFileSync(finFilePath);
+      await pdf(dataBuffer).then(function(data: any){
+        console.log(data.text.split('\n'));
+      });
+      fs.unlinkSync(finFilePath);
+    });
+    
+
+
 });
-
-
-
-
-
-
