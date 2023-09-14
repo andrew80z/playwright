@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 export class apiRequestsPage{
     async envSetup(){
       let myEnv = require( '../page/data/envs.json');
-let postUrl = "https://api.restful-api.dev/objects";
+let postUrl = "https://api.restful-api.dev/objects" ;
 let endpoint = '/v1/breweries/';
 if (process.env.runEnv == 'qa'){
     postUrl =  myEnv.qa.postUrl;
