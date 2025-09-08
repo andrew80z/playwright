@@ -10,7 +10,7 @@ export class DownloadFilePage{
     
     constructor(page: Page) {
         this.page = page;
-        this.pdfDownloadButton = this.page.locator('a', {hasText : "Radha Subramanya.pdf"});
+        this.pdfDownloadButton = this.page.locator('[class="example"] a');
     }
       
 }

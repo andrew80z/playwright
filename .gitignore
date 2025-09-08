@@ -2,7 +2,9 @@ node_modules/
 /test-results/
 /playwright-report/
 /playwright/.cache/
-/test-results/
+/.test-results/
 /playwright-report/
 /playwright/.cache/
 package-lock.json
+/page/data/tmpDownload
+/trace/
