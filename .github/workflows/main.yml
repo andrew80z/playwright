@@ -25,8 +25,11 @@ jobs:
       - name: Start Docker service
         run: sudo service docker start
 
+      - name: Clear Docker build cache
+        run: docker builder prune -f
+
       - name: Build Docker image
-        run: docker build -t playwright-tests .
+        run: docker build --no-cache -t playwright-tests .
 
       - name: Run Playwright tests in Docker
         run: docker run --rm playwright-tests
