@@ -63,11 +63,12 @@ test.describe('Heroku-app page testing', () => {
     await test.step('Prerequisite', async () => {
       const testUrl = `/dropdown`;
       await page.goto(testUrl);
+
+      await expect(dropDownPage.defaultOption).toHaveAttribute(
+        'selected',
+        'selected'
+      );
     });
-    await expect(dropDownPage.defaultOption).toHaveAttribute(
-      'selected',
-      'selected'
-    );
     await test.step('Option #1 selection and verification', async () => {
       await dropDownPage.dropDownExpand.click();
       await dropDownPage.dropDownMenu.selectOption('Option 1');
