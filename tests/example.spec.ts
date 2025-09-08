@@ -1,100 +1,121 @@
-import { PlaywrightMainPage } from '../page/mainPage';
-import { test, expect} from '@playwright/test';
-import { PlaywrightAbPage } from '../page/abPage';
-import { PlaywrightAddRemoveElPage } from '../page/addRemove-elements-page';
-import { PlaywrightCheckboxPage } from '../page/checkboxesPage';
-import { PlaywrightDropDownPage } from '../page/dropDownPage';
+import { test, expect } from './fixtures';
 import { firefox } from '@playwright/test';
-import { DownloadFilePage} from '../page/downloadFile.Page';
-import fs from "fs";
-
+import fs from 'fs';
 
 test.describe('Heroku-app page testing', () => {
   const browser = firefox.launch();
-  let nowDate = new Date();
-  let screenshotName = '.test-results/screenshots/screenshot_'+test.name+'_'+nowDate.toString().slice(0,10)+'.png';
-  
-  test.beforeEach(async ({ page }) =>{
-    const mainPage = new PlaywrightMainPage(page);
-    const playwrightAb = new PlaywrightAbPage(page);
-    await mainPage.goto();
-  })
-  
-  test.afterEach( async () =>{
-   // await (await browser).close();
-  }); 
-    
-    test('A\B testing should contain content', async ({ page }) => {
-      let headTextAb = 'Also known as split testing. This is a way in which businesses are able to simultaneously test and learn different versions of a page to see which text and/or functionality works best towards a desired outcome (e.g. a user action such as a click-through).';
-      //await (await browser).newPage();
-      const mainPage = new PlaywrightMainPage(page);
-      const playwrightAb = new PlaywrightAbPage(page);
-      await mainPage.abTestingButton.click();
+
+  test('A/B testing should contain content', async ({ page, mainPage, playwrightAb, screenshotName }) => {
+    const headTextAb =
+      'Also known as split testing. This is a way in which businesses are able to simultaneously test and learn different versions of a page to see which text and/or functionality works best towards a desired outcome (e.g. a user action such as a click-through).';
+
+    await test.step('Prerequisite', async () => {
+      await mainPage.abTestingButton.waitFor({ state: 'visible' });
+    });
+    await test.step('Click button', async () => {
+      await mainPage.abTestingButton.click({ force: true });
+    });
+    await test.step('Verify results', async () => {
       await expect(playwrightAb.abHeaderLabel).toBeVisible();
-      await page.screenshot({ path: screenshotName});
+      await page.screenshot({ path: screenshotName });
       await expect(playwrightAb.abTestingContent).toHaveText(headTextAb);
     });
+  });
 
-    test('Add/Remove Elements buttons behavior', async ({ page }) => {
-      const addRemoveEl = new PlaywrightAddRemoveElPage(page);
-      const mainPage = new PlaywrightMainPage(page);
-      await mainPage.addRemoveButton.click();
+  test('Add-Remove Elements buttons behavior', async ({ page, addRemoveEl }) => {
+    await test.step('Prerequisite', async () => {
+      const testUrl = `/add_remove_elements/`;
+      await page.goto(testUrl);
+
+    });
+    await test.step('Verify Add-Remove buttons visibility', async () => {
       await expect(addRemoveEl.addRemoveHeader).toBeVisible();
       await expect(addRemoveEl.delButton).not.toBeVisible();
-      await page.screenshot({ path: screenshotName});
+    });
+    await test.step('Verify Add button', async () => {
       await addRemoveEl.addButton.click();
       await expect(addRemoveEl.delButton).toBeVisible();
-      await page.screenshot({ path: screenshotName});
+    });
+    await test.step('Verify Del button', async () => {
       await addRemoveEl.delButton.click();
       await expect(addRemoveEl.delButton).not.toBeVisible();
     });
+  });
 
-    test('Checkboxes behavior', async ({ page }) => {
-      const checkboxesPage = new PlaywrightCheckboxPage(page);
-      const mainPage = new PlaywrightMainPage(page);
-      await mainPage.checkboxesButton.click();
-      expect(checkboxesPage.checkbox1).not.toBeChecked;
-      expect(checkboxesPage.checkbox2).toBeChecked;
-      await checkboxesPage.checkbox1.click();
-      expect(checkboxesPage.checkbox1).toBeChecked;
-      await checkboxesPage.checkbox2.click();
-      expect(checkboxesPage.checkbox2).not.toBeChecked;
+  test('Checkboxes behavior', async ({ page, checkboxesPage }) => {
+    const testUrl = `/checkboxes`;
+    await test.step('Prerequisite', async () => {
+      await page.goto(testUrl);
+      await expect(checkboxesPage.checkbox1).not.toBeChecked();
+      await expect(checkboxesPage.checkbox2).toBeChecked();
     });
+    await test.step('Checkbox1 behavior verification', async () => {
+      await checkboxesPage.checkbox1.click();
+      await expect(checkboxesPage.checkbox1).toBeChecked();
+    });
+    await test.step('Checkbox2 behavior verification', async () => {
+      await checkboxesPage.checkbox2.click();
+      await expect(checkboxesPage.checkbox2).not.toBeChecked();
+    });
+  });
 
-    test('Dropdown behavior', async ({ page }) => {
-      const dropDownPage = new PlaywrightDropDownPage(page);
-      const mainPage = new PlaywrightMainPage(page);
-      await mainPage.dropDownButton.click();
-      await expect(dropDownPage.defaultOption).toHaveAttribute('selected', 'selected');
+  test('Dropdown behavior', async ({ page, dropDownPage }) => {
+    await test.step('Prerequisite', async () => {
+      const testUrl = `/dropdown`;
+      await page.goto(testUrl);
+    });
+    await expect(dropDownPage.defaultOption).toHaveAttribute(
+      'selected',
+      'selected'
+    );
+    await test.step('Option #1 selection and verification', async () => {
       await dropDownPage.dropDownExpand.click();
       await dropDownPage.dropDownMenu.selectOption('Option 1');
-      await expect(dropDownPage.ddOption1).toHaveAttribute('selected', 'selected');
-      await dropDownPage.dropDownMenu.selectOption('Option 2');
-      await expect(dropDownPage.ddOption2).toHaveAttribute('selected', 'selected');
+      await expect(dropDownPage.ddOption1).toHaveAttribute(
+        'selected',
+        'selected'
+      );
     });
+    await test.step('Option #2 selection and verification', async () => {
+      await dropDownPage.dropDownExpand.click();
+      await dropDownPage.dropDownMenu.selectOption('Option 2');
+      await expect(dropDownPage.ddOption2).toHaveAttribute(
+        'selected',
+        'selected'
+      );
+    });
+  });
 
-    test('File download', async ({page}) => {
-      const mainPage = new PlaywrightMainPage(page);
-      const downloadFilePage = new DownloadFilePage(page);
-      const filename = 'Radha Subramanya.pdf';
-      const savePath = './page/data/tmpDownload/'
-      await mainPage.fileDownloadButton.click();
-      const downloadPromise = page.waitForEvent('download');
-      await downloadFilePage.pdfDownloadButton.click();
-      const download = await downloadPromise;
-      const finFilePath = savePath+filename
+  test('File download', async ({ page, downloadFilePage }) => {
+    const testUrl = `/download`;
+    let finFilePath: string;
+    const savePath = './page/data/tmpDownload/';
+    await test.step('Prerequisite', async () => {
+      await page.goto(testUrl);
+    });
+    await test.step('Download and verify file', async () => {
+      const downloadButton = await downloadFilePage.pdfDownloadButton.nth(0);
+      await downloadButton.waitFor({ state: 'visible' });
+      const fileName = await downloadButton.innerText();
+      console.log('File name to download: ' + fileName);
+      const [download] = await Promise.all([
+        page.waitForEvent('download'),
+        downloadButton.click(),
+      ]);
+      finFilePath = savePath + fileName;
       // Wait for the download process to complete
       console.log(await download.path());
       // Save downloaded file somewhere
       await download.saveAs(finFilePath);
-      let pdf = require('pdf-parse');
-      let dataBuffer = fs.readFileSync(finFilePath);
-      await pdf(dataBuffer).then(function(data: any){
+    });
+    await test.step('File content verification', async () => {
+      // Verify the download process
+      const pdf = require('pdf-parse');
+      const dataBuffer = fs.readFileSync(finFilePath);
+      await pdf(dataBuffer).then(function (data: { text: string }) {
         console.log(data.text.split('\n'));
       });
       fs.unlinkSync(finFilePath);
     });
-    
-
-
+  });
 });
