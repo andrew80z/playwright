@@ -13,12 +13,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.55.1",
     "@types/jquery": "^3.5.16",
     "@types/mocha": "^10.0.1",
     "@types/node-fetch": "^2.6.4",
-    "node-fetch": "^2.6.12",
-    "playwright-mcp": "0.0.12"
+    "node-fetch": "^2.6.12"
   },
   "dependencies": {
     "cross-env": "^7.0.3",

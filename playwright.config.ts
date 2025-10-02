@@ -1,7 +1,10 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { devices } from '@playwright/test';
 import { defineConfig } from '@playwright/test';
-import envData from './page/data/envs.json';
+
+// Use require for JSON import to ensure compatibility
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const envData = require('./page/data/envs.json');
 const { qa, dev } = envData;
 
 /**
