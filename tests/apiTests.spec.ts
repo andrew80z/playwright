@@ -19,22 +19,6 @@ const testData = {
     state: 'Ohio',
     street: '5164 Kennedy Ave'
 }
-/*
-let myEnv = require( '../page/data/envs.json');
-let postUrl =  myEnv.qa.postUrl;
-let endpoint = '/v1/breweries/';
-if (process.env.runEnv == 'qa'){
-    postUrl =  myEnv.qa.postUrl;
-    const endpoint = myEnv.qa.endpoint;
-    console.log(`test ${JSON.stringify( myEnv.qa.endpoint)}`);
-} else if(process.env.runEnv == 'dev'){
-    postUrl =  myEnv.dev.postUrl;
-    const endpoint = myEnv.dev.endpoint;
-    console.log(`test ${JSON.stringify( myEnv.dev.endpoint)}`);
-} else{
-    console.log(` ${process.env.runEnv}is an Invalid input`);
-}
-*/
 let requests = new apiRequestsPage();
 
 //const postUrl = 'https://api.restful-api.dev/objects';

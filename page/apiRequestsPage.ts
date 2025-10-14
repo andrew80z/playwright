@@ -47,7 +47,7 @@ async getListOfObjects(myUrl: RequestInfo | URL){
           return formJSON;
 }
 
-async testPostrequest(myUrl: RequestInfo | URL , postBody){
+async testPostrequest(myUrl: RequestInfo | URL , postBody: { name: string; data: { year: number; price: number; "CPU model": string; "Hard disk size": string; }; }){
           let method = 'POST';
         
            const response =  await fetch(myUrl, {
